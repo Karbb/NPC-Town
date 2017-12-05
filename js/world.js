@@ -21,7 +21,6 @@ var World = {
             World.gameloop();
         }, 1000);
         this.listBuildings();
-        Outside.init();
     },
     syncUI: function () {
 

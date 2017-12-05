@@ -30,7 +30,7 @@ var Building = [
     },
     {
         name: "Outside",
-        description: "Not inside :D",
+        description: "",
         owned: true,
         price: 0,
         init: function () {

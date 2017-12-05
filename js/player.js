@@ -1,9 +1,10 @@
 "use strict";
 
 class Player {
-    constructor(x, y, items) {
+    constructor(x, y, location, items) {
         this._x = x;
         this._y = y;
+        this.location = location;
         this.items = items;
         this.drawRoguelike();
     }
