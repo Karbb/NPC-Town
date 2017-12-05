@@ -14,4 +14,30 @@ body {
 
 .title {
   font-size: 18px;
+  text-align: center;
+  text-decoration: underline;
+}
+
+#canvas {
+  text-align: center;
+}
+
+#notifications {
+  height: 300px;
+}
+
+.bordered {
+  position: relative;
+	text-align: center;
+	border: 1px solid black;
+	width: 100px;
+	margin-bottom: 5px;
+	padding: 5px 10px;
+	cursor: pointer;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }

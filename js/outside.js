@@ -1,7 +1,6 @@
 "use strict";
 
 var Outside = {
-    container: document.getElementById("map"),
     init: function () {
         var options = {
             width: 20,
@@ -11,13 +10,13 @@ var Outside = {
         }
 
         World.display = new ROT.Display(options);
-        if (this.container.hasChildNodes()) {
-            this.container.removeChild(this.container.childNodes[0]);
+        if (World.container.hasChildNodes()) {
+            World.container.removeChild(World.container.childNodes[0]);
         }
-        this.container.appendChild(World.display.getContainer());
+        World.container.appendChild(World.display.getContainer());
 
         World.map = {};
-        this.generateMap();
+        Outside.generateMap();
 
         var scheduler = new ROT.Scheduler.Simple();
         scheduler.add(World.player, true);

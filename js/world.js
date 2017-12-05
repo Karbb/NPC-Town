@@ -6,6 +6,10 @@ var World = {
     player: null,
     engine: null,
     map: null,
+    buildingsDiv: document.getElementById("buildings"),
+    container: document.getElementById("canvas"),
+
+
     init: function () {
         Notifications.init();
         this.syncUI();
@@ -16,10 +20,11 @@ var World = {
         this.gRefreshInterval = setInterval(function () {
             World.gameloop();
         }, 1000);
+        this.listBuildings();
         Outside.init();
     },
     syncUI: function () {
-        this.listBuildings();
+
     },
     gameloop: function () {
         this.syncUI();
@@ -38,10 +43,14 @@ var World = {
         World.start();
     },
     listBuildings: function () {
-        for (var i in Building) {
+        for (var i = 0; i < Building.length; i++) {
             var building = Building[i];
-            if (!building.owned) {
-            }
+            let string = document.createElement('p');
+            string.innerHTML = building.name;
+            string.className += "bordered";
+            string.title = building.description;
+            string.addEventListener("click", building.init);
+            this.buildingsDiv.appendChild(string);
         }
     },
     inventory: function () {

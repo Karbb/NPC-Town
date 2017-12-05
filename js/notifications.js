@@ -3,7 +3,7 @@
 var Notifications = {
     GAIN_CSS: "award",
     LOSS_CSS: "cost",
-    MAX_NOTIFICATIONS_NUMBER: 12,
+    MAX_NOTIFICATIONS_NUMBER: 10,
     init: function() {},
     parentDiv: document.getElementById("notifications"),
     create: function(message) {
