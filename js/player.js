@@ -1,8 +1,15 @@
 "use strict";
 
 class Player {
-    constructor(items) {
+    constructor(x, y, items) {
+        this._x = x;
+        this._y = y;
         this.items = items;
+        this.drawRoguelike();
+    }
+
+    drawRoguelike() {
+        World.display.draw(this._x, this._y, "@", "#ff0");
     }
 
     itemAcquired(itemToAdd) {
@@ -40,16 +47,51 @@ class Player {
             }
         }
     }
-    
-    draw() {
-        var parentDiv = document.getElementById("inventory");
-        parentDiv.innerHTML = '';
 
-        this.items.forEach(item => {
-            let string = document.createElement('p');
-            string.innerHTML = item.name + ": " + item.quantity;
-            string.title = item.description;
-            parentDiv.appendChild(string);
-        });
+    act() {
+        World.engine.lock();
+
+        window.addEventListener("keydown", this.handleEvent);
     }
+
+    handleEvent(e) {
+        var keyMap = {};
+        keyMap[38] = 0;
+        keyMap[33] = 1;
+        keyMap[39] = 2;
+        keyMap[34] = 3;
+        keyMap[40] = 4;
+        keyMap[35] = 5;
+        keyMap[37] = 6;
+        keyMap[36] = 7;
+
+        var code = e.keyCode;
+
+        if (!(code in keyMap)) { return; }
+
+        var x = this.World.player._x;
+        var y = this.World.player._y;
+
+        var diff = ROT.DIRS[8][keyMap[code]];
+        var newX = x + diff[0];
+        var newY = y + diff[1];
+
+        var newKey = newX + "," + newY;
+
+        if (!(newKey in World.map)) { return; } /* cannot move in this direction */
+        if (!(World.map[newKey] === ".")) { return; }
+
+       
+        World.player._x = newX;
+        World.player._y = newY;
+
+        World.player.drawRoguelike();
+
+        World.display.draw(x, y, World.map[x + "," + y]);
+        
+        window.removeEventListener("keydown", this);
+        World.engine.unlock();
+    }
+
+
 }

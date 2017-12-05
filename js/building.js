@@ -18,5 +18,11 @@ var Building = [
         description: "",
         owned: false,
         price: 500
+    },
+    {
+        name: "Outside",
+        description: "",
+        owned: true,
+        price: 0
     }
 ];
