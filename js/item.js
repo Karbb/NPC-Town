@@ -1,13 +1,14 @@
+(function (root) {
 "use strict";
 
-class Item {
-    constructor(name, description, quantity) {
-        this.name = name;
-        this.description = description;
-        this.quantity = quantity;
-    }
+function Item(name, description, quantity) {
+    this.name = name;
+    this.description = description;
+    this.quantity = quantity;
+};
 
-    modifyQuantity(value) {
-        this.quantity += value;
-    }
-}
+Item.prototype.modifyQuantity = function (value) {
+    this.quantity += value;
+};
+root.NPCT.Item = Item;
+}(this));

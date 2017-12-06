@@ -1,22 +1,32 @@
-'use strict';
+(function (root) {
 
-var Notifications = {
-    GAIN_CSS: "award",
-    LOSS_CSS: "cost",
-    MAX_NOTIFICATIONS_NUMBER: 10,
-    init: function() {},
-    parentDiv: document.getElementById("notifications"),
-    create: function(message) {
-        let string = document.createElement('p');
+    'use strict';
+
+    var Notifications = {
+        MAX_NOTIFICATIONS_NUMBER: 10,
+        notificationsDiv: document.getElementById("notificationsContainer")
+    };
+
+    /**
+     * Function that remove all existing notifications
+     */
+    Notifications.clear = function () {
+        this.notificationsDiv.innerHTML = "";
+    };
+
+    Notifications.create = function (message) {
+        var string = document.createElement('p');
         string.innerHTML = message;
 
-        this.parentDiv.appendChild(string);
-        this.removeOldNotifications();
-    },
-    removeOldNotifications: function() {
-        let notifications = this.parentDiv.children;
+        this.notificationsDiv.insertBefore(string, this.notificationsDiv.firstChild);
+        Notifications.removeOldNotifications();
+    };
+    Notifications.removeOldNotifications = function () {
+        let notifications = this.notificationsDiv.children;
         if (notifications.length > this.MAX_NOTIFICATIONS_NUMBER) {
-            notifications[0].remove();
+            notifications[this.MAX_NOTIFICATIONS_NUMBER - 1].remove();
         }
-    }
-};
+    };
+
+    root.NPCT.Notifications = Notifications;
+}(this));

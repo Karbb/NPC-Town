@@ -1,49 +1,98 @@
-"use strict";
+(function (root) {
+    "use strict";
 
-var World = {
-    display: null,
-    items: null,
-    player: null,
-    engine: null,
-    map: null,
-    buildingsDiv: document.getElementById("buildings"),
-    container: document.getElementById("canvas"),
+    var World = {
+        /** 
+         * Rot.Display instance */
+        display: null,
+        /**
+         * Array field storing items
+         */
+        inventory: null,
+        /**
+         * Rot.Engine instance
+         */
+        engine: null,
+        /**
+        * Rot.Map instance
+        */
+        map: null,
+        player: null,
 
+        /**
+         * Div HTMLObjects list
+         */
+        buildingsDiv: document.getElementById("buildings"),
+        containerDiv: document.getElementById("canvas"),
+        inventoryDiv: document.getElementById("inventory"),
+    };
 
-    init: function () {
-        Notifications.init();
+    /**
+     * Init a new world
+     */
+    World.init = function () {
+        NPCT.Notifications.clear();
         this.syncUI();
         this.gIsGameOver = false;
-        this.items = [];
-    },
-    start: function () {
+        this.inventory = [];
+    };
+
+    /**
+     * Start a new world
+     */
+    World.start = function () {
         this.gRefreshInterval = setInterval(function () {
             World.gameloop();
         }, 1000);
         this.listBuildings();
-    },
-    syncUI: function () {
+    };
 
-    },
-    gameloop: function () {
+    /**
+     * Draw UI
+     */
+    World.syncUI = function () {
+
+    };
+
+    /**
+     * Gameloop function
+     * - syncUI
+     * - checkGameOver
+     */
+    World.gameloop = function () {
         this.syncUI();
         this.checkGameOver();
         if (this.gIsGameOver) {
             return;
         }
-    },
-    checkGameOver: function () { },
-    onRestart: () => {
+    };
+
+    /**
+     * 
+     */
+    World.checkGameOver = function () {
+
+    };
+
+    World.onRestart = function () {
         World.init();
         World.start();
-    },
-    onStart: () => {
+    };
+
+    World.onStart = function () {
         World.init();
         World.start();
-    },
-    listBuildings: function () {
-        for (var i = 0; i < Building.length; i++) {
-            var building = Building[i];
+    };
+
+    /**
+     * 
+     */
+    World.listBuildings = function () {
+        for (var i in NPCT.Building) {
+            var building = NPCT.Building[i];
+            if (building.name === "") {
+                break;
+            }
             let string = document.createElement('p');
             string.innerHTML = building.name;
             string.className += "bordered";
@@ -51,16 +100,19 @@ var World = {
             string.addEventListener("click", building.init);
             this.buildingsDiv.appendChild(string);
         }
-    },
-    inventory: function () {
-        var parentDiv = document.getElementById("inventory");
-        parentDiv.innerHTML = '';
-
-        this.items.forEach(item => {
+    };
+    /**
+     * 
+     */
+    World.drawinventory = function () {
+            this.inventoryDiv.innerHTML = "";
+        this.inventory.forEach(item => {
             let string = document.createElement('p');
             string.innerHTML = item.name + ": " + item.quantity;
             string.title = item.description;
-            parentDiv.appendChild(string);
+            this.inventoryDiv.appendChild(string);
         });
-    }
-};
+    };
+
+    root.NPCT.World = World;
+}(this));

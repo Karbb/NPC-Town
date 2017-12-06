@@ -1,23 +1,22 @@
-"use strict";
+(function (root) {
+    "use strict";
 
-class Player {
-    constructor(x, y, location, items) {
+    var Player = function (x, y) {
         this._x = x;
         this._y = y;
-        this.location = location;
-        this.items = items;
         this.drawRoguelike();
     }
 
-    drawRoguelike() {
-        World.display.draw(this._x, this._y, "@", "#ff0");
-    }
+    Player.prototype.drawRoguelike = function () {
+        NPCT.World.display.draw(this._x, this._y, "@", "#ff0");
+    };
 
-    itemAcquired(itemToAdd) {
+    Player.itemAcquired = function (itemToAdd) {
         var itemExisting = null;
+        var inventory = NPCT.World.inventory;
 
-        for (var i = 0; i < this.items.length; i++) {
-            var item = this.items[i];
+        for (var i = 0; i < inventory.length; i++) {
+            var item = inventory[i];
             if (item.name === itemToAdd.name) {
                 itemExisting = item;
                 break;
@@ -25,37 +24,42 @@ class Player {
         }
 
         if (itemExisting === null) {
-            this.items.push(new Item(itemToAdd.name, itemToAdd.description, itemToAdd.quantity));
+            inventory.push(new NPCT.Item(itemToAdd.name, itemToAdd.description, itemToAdd.quantity));
         } else {
             itemExisting.modifyQuantity(itemToAdd.quantity);
         }
-    }
 
-    itemUsed(itemToUse) {
-        for (var i = 0; i < this.items.length; i++) {
-            var item = this.items[i];
+        NPCT.World.drawinventory();
+    };
+
+    Player.itemUsed = function (itemToUse) {
+        var inventory = NPCT.World.inventory;
+
+        for (var i = 0; i < inventory.length; i++) {
+            var item = inventory[i];
             if (item.name === itemToUse.name) {
                 if (item.quantity > itemToUse.quantity) {
                     item.modifyQuantity(-itemToUse.quantity);
                 } else if (item.quantity === itemToUse.quantity) {
-                    this.items.splice(i, 1);
+                    inventory.splice(i, 1);
                 } else {
-                    Notifications.create("Can't use!");
+                    NPCT.Notifications.create("Can't use!");
                 }
                 break;
             } else {
-                Notifications.create("Can't use!");
+                NPCT.Notifications.create("Can't use!");
             }
         }
-    }
+        NPCT.World.drawinventory();
+    };
 
-    act() {
-        World.engine.lock();
+    Player.prototype.act = function () {
+        NPCT.World.engine.lock();
 
         window.addEventListener("keydown", this.handleEvent);
-    }
+    };
 
-    handleEvent(e) {
+    Player.prototype.handleEvent = function (e) {
         var keyMap = {};
         keyMap[38] = 0;
         keyMap[33] = 1;
@@ -70,8 +74,8 @@ class Player {
 
         if (!(code in keyMap)) { return; }
 
-        var x = this.World.player._x;
-        var y = this.World.player._y;
+        var x = NPCT.World.player._x;
+        var y = NPCT.World.player._y;
 
         var diff = ROT.DIRS[8][keyMap[code]];
         var newX = x + diff[0];
@@ -79,20 +83,20 @@ class Player {
 
         var newKey = newX + "," + newY;
 
-        if (!(newKey in World.map)) { return; } /* cannot move in this direction */
-        if (!(World.map[newKey] === ".")) { return; }
+        if (!(newKey in NPCT.World.map)) { return; } /* cannot move in this direction */
+        if (!(NPCT.World.map[newKey] === ".")) { return; }
 
 
-        World.player._x = newX;
-        World.player._y = newY;
+        NPCT.World.player._x = newX;
+        NPCT.World.player._y = newY;
 
-        World.player.drawRoguelike();
+        NPCT.World.player.drawRoguelike();
 
-        World.display.draw(x, y, World.map[x + "," + y]);
+        NPCT.World.display.draw(x, y, NPCT.World.map[x + "," + y]);
 
         window.removeEventListener("keydown", this);
-        World.engine.unlock();
-    }
+        NPCT.World.engine.unlock();
+    };
 
-
-}
+    root.NPCT.Player = Player;
+}(this));
