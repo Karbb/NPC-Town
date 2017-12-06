@@ -82,14 +82,14 @@ class Player {
         if (!(newKey in World.map)) { return; } /* cannot move in this direction */
         if (!(World.map[newKey] === ".")) { return; }
 
-       
+
         World.player._x = newX;
         World.player._y = newY;
 
         World.player.drawRoguelike();
 
         World.display.draw(x, y, World.map[x + "," + y]);
-        
+
         window.removeEventListener("keydown", this);
         World.engine.unlock();
     }
