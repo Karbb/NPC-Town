@@ -4,11 +4,6 @@
     var Player = function (x, y) {
         this._x = x;
         this._y = y;
-        this.drawRoguelike();
-    };
-
-    Player.prototype.drawRoguelike = function () {
-        World.display.draw(this._x, this._y, "@", "#ff0");
     };
 
     Player.itemAcquired = function (itemToAdd) {
@@ -63,45 +58,37 @@
         window.addEventListener("keydown", this.handleEvent);
     };
 
-    Player.prototype.handleEvent = function (e) {
-        var keyMap = {};
-        keyMap[38] = 0;
-        keyMap[33] = 1;
-        keyMap[39] = 2;
-        keyMap[34] = 3;
-        keyMap[40] = 4;
-        keyMap[35] = 5;
-        keyMap[37] = 6;
-        keyMap[36] = 7;
+    Player.prototype.move = function (dX, dY) {
 
-        var code = e.keyCode;
+        var nextTile = World.map.getTile(this._x + dX, this._y + dY);
 
-        if (!(code in keyMap)) { return; }
-
-        var x = World.player._x;
-        var y = World.player._y;
-
-        var diff = ROT.DIRS[8][keyMap[code]];
-        var newX = x + diff[0];
-        var newY = y + diff[1];
-
-        var newKey = newX + "," + newY;
-
-        if (!(newKey in World.map.tiles)) { return; } /* exit */
-
-        if (World.map.tiles[newKey].getContent()[0]) {
-            Player.itemAcquired(World.map.tiles[newKey].getContent()[0]);
-            World.map.tiles[newKey].getContent().splice(0, 1);
+        if (nextTile.getContent()[0]) {
+            Player.itemAcquired(nextTile.getContent()[0]);
+            nextTile.getContent().splice(0, 1);
         }
 
-        if (!(World.map.tiles[newKey].isWalkable())) { return; }
+        if (!(nextTile.isWalkable())) {
+            return;
+        }
 
-        World.player._x = newX;
-        World.player._y = newY;
+        this._x = Math.max(0,
+            Math.min(World.map._width - 1, this._x + dX));
+        this._y = Math.max(0,
+            Math.min(World.map._height - 1, this._y + dY));
+    };
 
-        World.player.drawRoguelike();
+    Player.prototype.handleEvent = function (e) {
+        if (e.keyCode === ROT.VK_LEFT) {
+            World.player.move(-1, 0);
+        } else if (e.keyCode === ROT.VK_RIGHT) {
+            World.player.move(1, 0);
+        } else if (e.keyCode === ROT.VK_UP) {
+            World.player.move(0, -1);
+        } else if (e.keyCode === ROT.VK_DOWN) {
+            World.player.move(0, 1);
+        }
 
-        World.display.draw(x, y, World.map.tiles[x + "," + y].getIcon());
+        World.render();
 
         window.removeEventListener("keydown", this);
         World.engine.unlock();

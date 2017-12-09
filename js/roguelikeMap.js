@@ -4,7 +4,15 @@
     var RoguelikeMap = function (width, height) {
         this._width = width || ROT.DEFAULT_WIDTH;
         this._height = height || ROT.DEFAULT_HEIGHT;
-        this.tiles = {};
+        this.tiles = [];
+
+        for (var x = 0; x < this._width; x++) {
+            this.tiles.push([]);
+            for (var y = 0; y < this._height; y++) {
+                this.tiles[x].push(undefined);
+            }
+        }
+
         this.freeCells = [];
     };
 
@@ -12,25 +20,28 @@
         return this.tiles;
     };
 
-    RoguelikeMap.prototype.getTile = function (key) {
-        return this.tiles[key];
+    RoguelikeMap.prototype.getTile = function (x, y) {
+        return this.tiles[x][y];
     };
 
-    RoguelikeMap.prototype.setTile = function (key, tile) {
-        this.tiles[key] = tile;
+    RoguelikeMap.prototype.setTile = function (x, y, tile) {
+        this.tiles[x][y] = tile;
     };
 
-    RoguelikeMap.prototype.setFreeCells = function () {
-        for (var key in this.tiles) {
-            if (this.getTile(key).isWalkable()) {
-                this.freeCells.push(key);
+    RoguelikeMap.prototype.setFreeCells = function () { 
+        for(let x = 0; x < this._width; x++){
+            for(let y = 0; y < this._height; y++){
+                let tile = this.getTile(x,y);
+                if(tile.isWalkable){
+                    this.freeCells.push(tile); 
+                }
             }
         }
-    };
+    }; 
 
-    RoguelikeMap.prototype.getFreeCells = function () {
-        return this.freeCells;
-    };
+    RoguelikeMap.prototype.getFreeCells = function () { 
+        return this.freeCells; 
+    }; 
 
     RoguelikeMap.WildlandMap = function (width, height) {
         RoguelikeMap.call(this, width, height);
@@ -41,17 +52,17 @@
     RoguelikeMap.WildlandMap.prototype.create = function (callback) {
         var w = this._width - 1;
         var h = this._height - 1;
-        for (var i = 0; i <= w; i++) {
-            for (var j = 0; j <= h; j++) {
+        for (var x = 0; x <= w; x++) {
+            for (var y = 0; y <= h; y++) {
 
-                var empty = (i && j && i < w && j < h);
+                var empty = (x && y && x < w && y < h);
                 var isWall = true;
 
-                if ((j === Math.floor(h / 2) && i !== w) || (j === Math.floor(h / 2 + 1) && i !== w) || empty) {
+                if ((y === Math.floor(h / 2) && x !== w) || (y === Math.floor(h / 2 + 1) && x !== w) || empty) {
                     isWall = false;
                 }
 
-                var tile = new Tile(i, j, 0, isWall ? Tile.Wall : Tile.Empty);
+                var tile = new Tile(x, y, 0, isWall ? Tile.Wall : Tile.Empty);
 
                 callback(tile);
             }

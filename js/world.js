@@ -116,5 +116,26 @@
         });
     };
 
+    World.render = function () {
+        var screenWidth = World.display._options.width;
+        var screenHeight = World.display._options.height;
+
+        var topLeftX = Math.max(0, World.player._x - (screenWidth / 2));
+        topLeftX = Math.min(topLeftX, World.map._width - screenWidth);
+        topLeftX = Math.floor(topLeftX);
+
+        var topLeftY = Math.max(0, World.player._y - (screenHeight / 2));
+        topLeftY = Math.min(topLeftY, World.map._height - screenHeight);
+        topLeftY = Math.floor(topLeftY);
+
+        for (var x = topLeftX; x < topLeftX + screenWidth; x++) {
+            for (var y = topLeftY; y < topLeftY + screenHeight; y++) {
+                World.display.draw(x - topLeftX, y - topLeftY, World.map.getTile(x, y).hasContent() ? World.map.getTile(x, y).getFirstItemInTile().getIcon() : World.map.getTile(x, y).getIcon());
+            }
+        }
+
+        World.display.draw(World.player._x - topLeftX, World.player._y - topLeftY, "@", "#ff0");
+    };
+
     root.World = World;
 }(this));

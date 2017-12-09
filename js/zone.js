@@ -12,12 +12,12 @@
 
     Zone.init = function (zone) {
         var options = {
-            width: 20,
-            height: 12,
-            fontSize: 24,
+            width: 21,
+            height: 13,
+            fontSize: 20,
             forceSquareRatio: true,
-            fontFamily : "monospace",
-            spacing : 1.05
+            fontFamily: "fixedsys",
+            spacing: 1.10
         };
 
         World.display = new ROT.Display(options);
@@ -46,46 +46,44 @@
     };
 
     Zone.Wildland.generateMap = function () {
-        World.map = new RoguelikeMap.WildlandMap(20, 12);
+        World.map = new RoguelikeMap.WildlandMap(50, 30);
 
         var digCallback = function (tile) {
-            var key = tile.getKey();
-            World.map.setTile(key, tile);
-
-            World.map.setFreeCells();
+            World.map.setTile(tile.getX(), tile.getY(), tile);
         };
 
         World.map.create(digCallback.bind(this));
 
+        World.map.setFreeCells();
+
         this.generateStuff(World.map.getFreeCells());
-        this.drawWholeMap();
         this.createPlayer(World.map.getFreeCells());
+
+        World.display.clear();
+        World.render();
     };
 
     Zone.Wildland.drawWholeMap = function () {
-        for (var key in World.map.tiles) {
-            var parts = key.split(",");
-            var x = parseInt(parts[0]);
-            var y = parseInt(parts[1]);
-            World.display.draw(x, y, World.map.getTile(key).hasContent() ? World.map.getTile(key).getFirstItemInTile().getIcon() : World.map.getTile(key).getIcon());
+        for (var x = 0; x < 50; x++) {
+            for (var y = 0; y < 30; y++) {
+                World.display.draw(x, y, World.map.getTile(x, y).getIcon());
+            }
         }
     };
 
     Zone.Wildland.generateStuff = function (freeCells) {
         for (var i = 0; i < 10; i++) {
-            var index = Math.floor(ROT.RNG.getUniform() * freeCells.length);
-            var key = freeCells.splice(index, 1)[0];
-            World.map.getTile(key).addItem(new Item("Berry", 1));
+            let randomTile = freeCells[Math.floor(ROT.RNG.getUniform() * freeCells.length)];
+            World.map.getTile(randomTile.getX(), randomTile.getY()).addItem(new Item("Berry", 1));
         }
+
+        World.map.setFreeCells();
     };
 
     Zone.Wildland.createPlayer = function (freeCells) {
-        var index = Math.floor(ROT.RNG.getUniform() * freeCells.length);
-        var key = freeCells.splice(index, 1)[0];
-        var parts = key.split(",");
-        var x = parseInt(parts[0]);
-        var y = parseInt(parts[1]);
-        World.player = new Player(x, y);
+        let randomTile = freeCells[Math.floor(ROT.RNG.getUniform() * freeCells.length)];
+
+        World.player = new Player(randomTile.getX(), randomTile.getY());
     };
 
     root.Zone = Zone;

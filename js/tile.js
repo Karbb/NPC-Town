@@ -1,17 +1,13 @@
 (function (root) {
     "use strict";
 
-    function Tile(x, y, z, type) {
+    function Tile(x,y,z,type) {
         this.x = x;
         this.y = y;
         this.z = z;
         this.type = type;
         this.content = [];
     }
-
-    Tile.prototype.getKey = function () {
-        return this.x + "," + this.y;
-    };
 
     Tile.prototype.isWalkable = function () {
         if (this.type === Tile.Empty && this.content.length > 0) {
@@ -42,6 +38,18 @@
         } else {
             return false;
         }
+    };
+
+    Tile.prototype.getX = function () {
+        return this.x;
+    };
+
+    Tile.prototype.getY = function () {
+        return this.y;
+    };
+
+    Tile.prototype.getZ = function (item) {
+        return this.z;
     };
 
     Tile.Wall = {
