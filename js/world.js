@@ -22,7 +22,7 @@
         /**
          * Div HTMLObjects list
          */
-        buildingsDiv: document.getElementById("buildings"),
+        zonesDiv: document.getElementById("zones"),
         containerDiv: document.getElementById("canvas"),
         inventoryDiv: document.getElementById("inventory"),
     };
@@ -44,7 +44,7 @@
         this.gRefreshInterval = setInterval(function () {
             World.gameloop();
         }, 1000);
-        this.listBuildings();
+        this.listZones();
     };
 
     /**
@@ -87,29 +87,30 @@
     /**
      * 
      */
-    World.listBuildings = function () {
-        for (var i in NPCT.Building) {
-            var building = NPCT.Building[i];
-            if (building.name === "") {
+    World.listZones = function () {
+        for (var i in NPCT.Zone) {
+            var zone = NPCT.Zone[i];
+            if (zone.name === "") {
                 break;
             }
             let string = document.createElement('p');
-            string.innerHTML = building.name;
+            string.innerHTML = zone.name;
             string.className += "bordered";
-            string.title = building.description;
-            string.addEventListener("click", building.init);
-            this.buildingsDiv.appendChild(string);
+            string.title = zone.description;
+            string.addEventListener("click", zone.init);
+            this.zonesDiv.appendChild(string);
         }
     };
+
     /**
      * 
      */
     World.drawinventory = function () {
-            this.inventoryDiv.innerHTML = "";
+        this.inventoryDiv.innerHTML = "";
         this.inventory.forEach(item => {
             let string = document.createElement('p');
-            string.innerHTML = item.name + ": " + item.quantity;
-            string.title = item.description;
+            string.innerHTML = item.type.name + ": " + item.quantity;
+            string.title = item.type.description;
             this.inventoryDiv.appendChild(string);
         });
     };

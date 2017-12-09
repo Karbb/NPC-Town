@@ -12,19 +12,20 @@
     };
 
     Player.itemAcquired = function (itemToAdd) {
+        console.log(itemToAdd);
         var itemExisting = null;
         var inventory = NPCT.World.inventory;
 
         for (var i = 0; i < inventory.length; i++) {
             var item = inventory[i];
-            if (item.name === itemToAdd.name) {
+            if (item.type === itemToAdd.type) {
                 itemExisting = item;
                 break;
             }
         }
 
         if (itemExisting === null) {
-            inventory.push(new NPCT.Item(itemToAdd.name, itemToAdd.description, itemToAdd.quantity));
+            inventory.push(itemToAdd);
         } else {
             itemExisting.modifyQuantity(itemToAdd.quantity);
         }
@@ -77,22 +78,28 @@
         var x = NPCT.World.player._x;
         var y = NPCT.World.player._y;
 
+
         var diff = ROT.DIRS[8][keyMap[code]];
         var newX = x + diff[0];
         var newY = y + diff[1];
 
         var newKey = newX + "," + newY;
 
-        if (!(newKey in NPCT.World.map)) { return; } /* cannot move in this direction */
-        if (!(NPCT.World.map[newKey] === ".")) { return; }
+        if (!(newKey in NPCT.World.map.tiles)) { return; } /* exit */
 
+        if (NPCT.World.map.tiles[newKey].getContent()[0]) {
+            Player.itemAcquired(NPCT.World.map.tiles[newKey].getContent()[0]);
+            NPCT.World.map.tiles[newKey].getContent().splice(0, 1);
+        }
+
+        if (!(NPCT.World.map.tiles[newKey].isWalkable())) { return; }
 
         NPCT.World.player._x = newX;
         NPCT.World.player._y = newY;
 
         NPCT.World.player.drawRoguelike();
 
-        NPCT.World.display.draw(x, y, NPCT.World.map[x + "," + y]);
+        NPCT.World.display.draw(x, y, NPCT.World.map.tiles[x + "," + y].getIcon());
 
         window.removeEventListener("keydown", this);
         NPCT.World.engine.unlock();
