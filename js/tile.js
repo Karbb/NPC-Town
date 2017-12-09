@@ -28,6 +28,22 @@
         return this.content;
     };
 
+    Tile.prototype.addItem = function (item) {
+        return this.content.push(item);
+    };
+
+    Tile.prototype.getFirstItemInTile = function () {
+        return this.content[this.content.length - 1];
+    };
+
+    Tile.prototype.hasContent = function () {
+        if (this.content.length > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
     Tile.Wall = {
         id: 0,
         name: "wall",
@@ -42,5 +58,5 @@
         walkable: true
     };
 
-    root.NPCT.Tile = Tile;
+    root.Tile = Tile;
 }(this));

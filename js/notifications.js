@@ -28,5 +28,5 @@
         }
     };
 
-    root.NPCT.Notifications = Notifications;
+    root.Notifications = Notifications;
 }(this));

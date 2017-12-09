@@ -25,13 +25,14 @@
         zonesDiv: document.getElementById("zones"),
         containerDiv: document.getElementById("canvas"),
         inventoryDiv: document.getElementById("inventory"),
+        contentDiv: document.getElementById("contentTitle"),
     };
 
     /**
      * Init a new world
      */
     World.init = function () {
-        NPCT.Notifications.clear();
+        Notifications.clear();
         this.syncUI();
         this.gIsGameOver = false;
         this.inventory = [];
@@ -88,8 +89,8 @@
      * 
      */
     World.listZones = function () {
-        for (var i in NPCT.Zone) {
-            var zone = NPCT.Zone[i];
+        for (var i in Zone) {
+            var zone = Zone[i];
             if (zone.name === "") {
                 break;
             }
@@ -115,5 +116,5 @@
         });
     };
 
-    root.NPCT.World = World;
+    root.World = World;
 }(this));
