@@ -17,7 +17,7 @@
     };
 
     Tile.prototype.getIcon = function () {
-        return this.type.icon;
+        return (this.hasContent() ? this.getFirstItemInTile().getIcon() : this.type.icon);
     };
 
     Tile.prototype.getContent = function () {

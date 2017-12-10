@@ -32,7 +32,7 @@
         for(let x = 0; x < this._width; x++){
             for(let y = 0; y < this._height; y++){
                 let tile = this.getTile(x,y);
-                if(tile.isWalkable){
+                if(tile.isWalkable()){
                     this.freeCells.push(tile); 
                 }
             }

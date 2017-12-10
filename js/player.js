@@ -19,12 +19,12 @@
         }
 
         if (itemExisting === null) {
-            inventory.push(itemToAdd);
-            Notifications.create("Added" + itemToAdd.getQuantity() + " " + itemToAdd.getName());
+            inventory.push(itemToAdd);     
         } else {
             itemExisting.modifyQuantity(itemToAdd.quantity);
-            Notifications.create("Added" + itemToAdd.getQuantity() + " " + itemToAdd.getName());
         }
+
+        Notifications.create("Added " + itemToAdd.getQuantity() + " " + itemToAdd.getName());
 
         World.drawinventory();
     };
@@ -59,6 +59,9 @@
     };
 
     Player.prototype.move = function (dX, dY) {
+        if(this._x + dX < 0 || this._x + dX > World.map._width || this._y + dY < 0 || this._y + dY > World.map._height){
+            return;
+        }
 
         var nextTile = World.map.getTile(this._x + dX, this._y + dY);
 

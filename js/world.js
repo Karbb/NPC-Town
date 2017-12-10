@@ -130,7 +130,7 @@
 
         for (var x = topLeftX; x < topLeftX + screenWidth; x++) {
             for (var y = topLeftY; y < topLeftY + screenHeight; y++) {
-                World.display.draw(x - topLeftX, y - topLeftY, World.map.getTile(x, y).hasContent() ? World.map.getTile(x, y).getFirstItemInTile().getIcon() : World.map.getTile(x, y).getIcon());
+                World.display.draw(x - topLeftX, y - topLeftY, World.map.getTile(x, y).getIcon());
             }
         }
 

@@ -3,7 +3,7 @@
 
     function Item(itemType, quantity) {
         this.setType(itemType);
-        this.quantity = quantity;
+        this.quantity = quantity || 1;
     };
 
     Item.prototype.modifyQuantity = function (value) {
