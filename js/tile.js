@@ -8,6 +8,7 @@
         this.content = [];
         this.icon = ".";
         this.walkable = false;
+        this.harvestable = false;
         this.foreground = null || World.display._options.fg;
         this.background = null || World.display._options.bg;
     }
@@ -19,11 +20,15 @@
         return this.walkable;
     };
 
+    Tile.prototype.isHarvestable = function () {
+        return this.harvestable;
+    };
+
     Tile.prototype.getIcon = function () {
         return (this.hasContent() ? this.getFirstItemInTile().getIcon() : this.icon);
     };
 
-    Tile.prototype.getForeground = function () {      
+    Tile.prototype.getForeground = function () {
         return (this.hasContent() ? this.getFirstItemInTile().getForeground() : this.foreground);
     };
 
@@ -81,6 +86,7 @@
 
     Tile.EmptyTile = function (x, y, z) {
         Tile.call(this, x, y, z);
+        this.name = "nothing";
         this.icon = "";
         this.walkable = true;
         this.background = (["#663300", "#996600", "#cc9900", "#99cc00"].random());
@@ -91,6 +97,7 @@
     Tile.TreeTile = function (x, y, z) {
         Tile.call(this, x, y, z);
         this.icon = "O";
+        this.name = "tree";
         this.walkable = false;
         this.foreground = "#663300";
         this.background = "#009900";
@@ -100,12 +107,26 @@
 
     Tile.LeafTile = function (x, y, z) {
         Tile.call(this, x, y, z);
+        this.name = "foliage";
         this.icon = "";
         this.walkable = true;
         this.background = "#009900";
     };
 
     Tile.LeafTile.extend(Tile);
+
+    Tile.BushTile = function (x, y, z) {
+        Tile.call(this, x, y, z);
+        this.icon = "*";
+        this.name = "bush";
+        this.walkable = false;
+        this.foreground = "#ff0000";
+        this.background = (["#663300", "#996600", "#cc9900", "#99cc00"].random());
+        this.content.push(new Item("Berry", [1, 2, 3, 5, 10].random()));
+        this.harvestable = true;
+    };
+
+    Tile.BushTile.extend(Tile);
 
     root.Tile = Tile;
 }(this));

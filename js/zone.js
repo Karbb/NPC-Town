@@ -12,11 +12,11 @@
 
     Zone.init = function (zone) {
         var options = {
-            width: 21,
-            height: 13,
+            width: 50,
+            height: 25,
             fontSize: 20,
             forceSquareRatio: true,
-            fontFamily: "fixedsys",
+            fontFamily: "Metrickal",
             spacing: 1.10
         };
 
@@ -46,7 +46,7 @@
     };
 
     Zone.Wildland.generateMap = function () {
-        World.map = new RoguelikeMap.WildlandMap(50, 30);
+        World.map = new RoguelikeMap.WildlandMap(200, 50);
 
         var digCallback = function (tile) {
             World.map.setTile(tile.getX(), tile.getY(), tile);
@@ -72,7 +72,7 @@
         for (var i = 0; i < 10; i++) {
             var index = Math.floor(ROT.RNG.getUniform() * freeCells.length);
             let randomTile = freeCells[index];
-            World.map.getTile(randomTile.getX(), randomTile.getY()).addItem(new Item("Berry", 1));
+            World.map.setTile(randomTile.getX(), randomTile.getY(), new Tile.BushTile(randomTile.getX(), randomTile.getY(), 0));
             freeCells.splice(index, 1);
         }
 
