@@ -54,8 +54,6 @@
 
         World.map.create(digCallback.bind(this));
 
-        World.map.setFreeCells();
-
         this.generateStuff(World.map.getFreeCells());
         this.createPlayer(World.map.getFreeCells());
 
@@ -73,17 +71,18 @@
 
     Zone.Wildland.generateStuff = function (freeCells) {
         for (var i = 0; i < 10; i++) {
-            let randomTile = freeCells[Math.floor(ROT.RNG.getUniform() * freeCells.length)];
+            var index = Math.floor(ROT.RNG.getUniform() * freeCells.length);
+            let randomTile = freeCells[index];
             World.map.getTile(randomTile.getX(), randomTile.getY()).addItem(new Item("Berry", 1));
+            freeCells.splice(index, 1);
         }
-
-        World.map.setFreeCells();
     };
 
     Zone.Wildland.createPlayer = function (freeCells) {
-        let randomTile = freeCells[Math.floor(ROT.RNG.getUniform() * freeCells.length)];
-
+        var index = Math.floor(ROT.RNG.getUniform() * freeCells.length);
+        let randomTile = freeCells[index];
         World.player = new Player(randomTile.getX(), randomTile.getY());
+        freeCells.splice(index, 1);
     };
 
     root.Zone = Zone;

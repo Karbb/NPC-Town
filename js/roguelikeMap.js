@@ -28,20 +28,9 @@
         this.tiles[x][y] = tile;
     };
 
-    RoguelikeMap.prototype.setFreeCells = function () { 
-        for(let x = 0; x < this._width; x++){
-            for(let y = 0; y < this._height; y++){
-                let tile = this.getTile(x,y);
-                if(tile.isWalkable()){
-                    this.freeCells.push(tile); 
-                }
-            }
-        }
-    }; 
-
-    RoguelikeMap.prototype.getFreeCells = function () { 
-        return this.freeCells; 
-    }; 
+    RoguelikeMap.prototype.getFreeCells = function () {
+        return this.freeCells;
+    };
 
     RoguelikeMap.WildlandMap = function (width, height) {
         RoguelikeMap.call(this, width, height);
@@ -61,8 +50,10 @@
                 if ((y === Math.floor(h / 2) && x !== w) || (y === Math.floor(h / 2 + 1) && x !== w) || empty) {
                     isWall = false;
                 }
-
-                var tile = new Tile(x, y, 0, isWall ? Tile.Wall : Tile.Empty);
+                var tile = isWall ? new Tile.WallTile(x, y, 0) : new Tile.EmptyTile(x, y, 0);
+                if(tile instanceof Tile.EmptyTile){
+                    this.freeCells.push(tile);
+                }
 
                 callback(tile);
             }

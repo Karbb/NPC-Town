@@ -1,23 +1,25 @@
 (function (root) {
     "use strict";
 
-    function Tile(x,y,z,type) {
+    function Tile(x, y, z) {
         this.x = x;
         this.y = y;
         this.z = z;
-        this.type = type;
         this.content = [];
+        this.name = name || "null";
+        this.icon = ".";
+        this.walkable = false;
     }
 
     Tile.prototype.isWalkable = function () {
-        if (this.type === Tile.Empty && this.content.length > 0) {
+        if (this instanceof Tile.EmptyTile && this.content.length > 0) {
             return false;
         }
-        return this.type.walkable;
+        return this.walkable;
     };
 
     Tile.prototype.getIcon = function () {
-        return (this.hasContent() ? this.getFirstItemInTile().getIcon() : this.type.icon);
+        return (this.hasContent() ? this.getFirstItemInTile().getIcon() : this.icon);
     };
 
     Tile.prototype.getContent = function () {
@@ -52,19 +54,22 @@
         return this.z;
     };
 
-    Tile.Wall = {
-        id: 0,
-        name: "wall",
-        icon: "#",
-        walkable: false
+    Tile.WallTile = function (x, y, z) {
+        Tile.call(this, x, y, z);
+        this.name = "Wall";
+        this.icon = "#";
     };
 
-    Tile.Empty = {
-        id: 1,
-        name: "empty",
-        icon: ".",
-        walkable: true
+    Tile.WallTile.prototype = Tile.prototype;
+
+    Tile.EmptyTile = function (x, y, z) {
+        Tile.call(this, x, y, z);
+        this.name = "Empty";
+        this.icon = ".";
+        this.walkable = true;
     };
+
+    Tile.EmptyTile.prototype = Tile.prototype;
 
     root.Tile = Tile;
 }(this));
