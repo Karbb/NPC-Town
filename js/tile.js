@@ -9,10 +9,12 @@
         this.name = name || "null";
         this.icon = ".";
         this.walkable = false;
+        this.foregroundColor = null || World.display._options.fg;
+        this.backgroundColor = null || World.display._options.bg;
     }
 
     Tile.prototype.isWalkable = function () {
-        if (this instanceof Tile.EmptyTile && this.content.length > 0) {
+        if (this instanceof EmptyTile && this.content.length > 0) {
             return false;
         }
         return this.walkable;
@@ -50,26 +52,48 @@
         return this.y;
     };
 
-    Tile.prototype.getZ = function (item) {
+    Tile.prototype.getZ = function () {
         return this.z;
     };
 
-    Tile.WallTile = function (x, y, z) {
+    Tile.prototype.getForeground = function () {
+        return this.foregroundColor;
+    };
+
+    Tile.prototype.getBackground = function () {
+        return this.backgroundColor;
+    };
+
+    function WallTile(x, y, z) {
         Tile.call(this, x, y, z);
         this.name = "Wall";
         this.icon = "#";
     };
 
-    Tile.WallTile.prototype = Tile.prototype;
+    WallTile.extend(Tile);
 
-    Tile.EmptyTile = function (x, y, z) {
+    function EmptyTile(x, y, z) {
         Tile.call(this, x, y, z);
         this.name = "Empty";
         this.icon = ".";
         this.walkable = true;
     };
 
-    Tile.EmptyTile.prototype = Tile.prototype;
+    EmptyTile.extend(Tile);
+
+    function TreeTile(x, y, z) {
+        Tile.call(this, x, y, z);
+        this.name = "Tree";
+        this.icon = "O";
+        this.walkable = false;
+        this.foregroundColor = "#663300";
+        this.backgroundColor = "#009900";
+    };
+
+    TreeTile.extend(Tile);
 
     root.Tile = Tile;
+    root.WallTile = WallTile;
+    root.EmptyTile = EmptyTile;
+    root.TreeTile = TreeTile;
 }(this));

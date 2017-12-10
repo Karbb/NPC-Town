@@ -53,7 +53,6 @@
         };
 
         World.map.create(digCallback.bind(this));
-
         this.generateStuff(World.map.getFreeCells());
         this.createPlayer(World.map.getFreeCells());
 
@@ -74,6 +73,12 @@
             var index = Math.floor(ROT.RNG.getUniform() * freeCells.length);
             let randomTile = freeCells[index];
             World.map.getTile(randomTile.getX(), randomTile.getY()).addItem(new Item("Berry", 1));
+            freeCells.splice(index, 1);
+        }
+        for (var i = 0; i < 10; i++) {
+            var index = Math.floor(ROT.RNG.getUniform() * freeCells.length);
+            let randomTile = freeCells[index];
+            World.map.setTile(randomTile.getX(), randomTile.getY(), new TreeTile(randomTile.getX(), randomTile.getY(), 0));
             freeCells.splice(index, 1);
         }
     };
