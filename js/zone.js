@@ -35,6 +35,9 @@
         scheduler.add(World.player, true);
 
         World.engine = new ROT.Engine(scheduler);
+
+        Notifications.create("Press '\\' to display game help.");
+
         World.engine.start();
     };
 
@@ -69,12 +72,12 @@
     };
 
     Zone.Wildland.generateStuff = function (freeCells) {
-        for (var i = 0; i < 10; i++) {
+        var generateBushes = function () {
             var index = Math.floor(ROT.RNG.getUniform() * freeCells.length);
             let randomTile = freeCells[index];
             World.map.setTile(randomTile.getX(), randomTile.getY(), new Tile.BushTile(randomTile.getX(), randomTile.getY(), 0));
             freeCells.splice(index, 1);
-        }
+        };
 
         var generateTrees = function () {
             var index = Math.floor(ROT.RNG.getUniform() * freeCells.length);
@@ -89,8 +92,9 @@
             freeCells.splice(index, 1);
         };
 
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 50; i++) {
             generateTrees();
+            generateBushes();
         }
     };
 

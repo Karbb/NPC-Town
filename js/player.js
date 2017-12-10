@@ -163,6 +163,7 @@
         World.display.clear();
         World.display.drawText(1, 2, "Press 'k' to inspect tiles.");
         World.display.drawText(1, 3, "Press 'h' to harvest.");
+        World.display.drawText(1, 5, "Press any key to return to game.");
     };
 
     root.Player = Player;
