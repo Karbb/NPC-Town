@@ -133,7 +133,7 @@
                 World.display.draw(x - topLeftX, y - topLeftY, World.map.getTile(x, y).getIcon(), World.map.getTile(x, y).getForeground(), World.map.getTile(x, y).getBackground());
             }
         }
-        World.display.draw(World.player._x - topLeftX, World.player._y - topLeftY, "@", "#ff0", World.map.getTile(World.player._x, World.player._y).getBackground());
+        World.display.draw(World.player._x - topLeftX, World.player._y - topLeftY, "@", "#ffff00", World.map.getTile(World.player._x, World.player._y).getBackground());
     };
 
     root.World = World;

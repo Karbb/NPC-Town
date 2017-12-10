@@ -8,8 +8,8 @@
         this.content = [];
         this.icon = ".";
         this.walkable = false;
-        this.foregroundColor = null || World.display._options.fg;
-        this.backgroundColor = null || World.display._options.bg;
+        this.foreground = null || World.display._options.fg;
+        this.background = null || World.display._options.bg;
     }
 
     Tile.prototype.isWalkable = function () {
@@ -21,6 +21,10 @@
 
     Tile.prototype.getIcon = function () {
         return (this.hasContent() ? this.getFirstItemInTile().getIcon() : this.icon);
+    };
+
+    Tile.prototype.getForeground = function () {      
+        return (this.hasContent() ? this.getFirstItemInTile().getForeground() : this.foreground);
     };
 
     Tile.prototype.getContent = function () {
@@ -55,52 +59,50 @@
         return this.z;
     };
 
-    Tile.prototype.getForeground = function () {
-        return this.foregroundColor;
-    };
-
     Tile.prototype.getBackground = function () {
-        return this.backgroundColor;
+        return this.background;
     };
 
-    Tile.prototype.setForeground = function (foregroundColor) {
-        this.foregroundColor = foregroundColor;
+    Tile.prototype.setForeground = function (foreground) {
+        this.foreground = foreground;
     };
 
-    Tile.prototype.setBackground = function (backgroundColor) {
-        this.backgroundColor = backgroundColor;
+    Tile.prototype.setBackground = function (background) {
+        this.background = background;
     };
 
-    Tile.WallTile = function(x, y, z) {
+    Tile.WallTile = function (x, y, z) {
         Tile.call(this, x, y, z);
         this.icon = "#";
+        this.background = "#009900";
     };
 
     Tile.WallTile.extend(Tile);
 
-    Tile.EmptyTile = function(x, y, z) {
+    Tile.EmptyTile = function (x, y, z) {
         Tile.call(this, x, y, z);
-        this.icon = ".";
+        this.icon = "";
         this.walkable = true;
+        this.background = (["#663300", "#996600", "#cc9900", "#99cc00"].random());
     };
 
     Tile.EmptyTile.extend(Tile);
 
-    Tile.TreeTile = function(x, y, z) {
+    Tile.TreeTile = function (x, y, z) {
         Tile.call(this, x, y, z);
         this.icon = "O";
         this.walkable = false;
-        this.foregroundColor = "#663300";
-        this.backgroundColor = "#009900";
+        this.foreground = "#663300";
+        this.background = "#009900";
     };
 
     Tile.TreeTile.extend(Tile);
 
-    Tile.LeafTile = function(x, y, z) {
+    Tile.LeafTile = function (x, y, z) {
         Tile.call(this, x, y, z);
         this.icon = "";
         this.walkable = true;
-        this.backgroundColor = "#009900";
+        this.background = "#009900";
     };
 
     Tile.LeafTile.extend(Tile);

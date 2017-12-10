@@ -75,19 +75,22 @@
             World.map.getTile(randomTile.getX(), randomTile.getY()).addItem(new Item("Berry", 1));
             freeCells.splice(index, 1);
         }
-        for (var i = 0; i < 10; i++) {
+
+        var generateTrees = function () {
             var index = Math.floor(ROT.RNG.getUniform() * freeCells.length);
             let randomTile = freeCells[index];
             World.map.setTile(randomTile.getX(), randomTile.getY(), new Tile.TreeTile(randomTile.getX(), randomTile.getY(), 0));
-
 
             for (let x = randomTile.getX() - 1; x < randomTile.getX() + 2; x++) {
                 for (let y = randomTile.getY() - 1; y < randomTile.getY() + 2; y++) {
                     World.map.getTile(x, y).setBackground("#009900");
                 }
             }
-
             freeCells.splice(index, 1);
+        };
+
+        for (let i = 0; i < 15; i++) {
+            generateTrees();
         }
     };
 
