@@ -161,8 +161,8 @@
 
     Player.prototype.drawHelpscreen = function () {
         World.display.clear();
-        World.display.drawText(1, 2, "Press 'k' to inspect tiles.");
-        World.display.drawText(1, 3, "Press 'h' to harvest.");
+        World.display.drawText(1, 2, "Press 'k' then a direction key to inspect tiles.");
+        World.display.drawText(1, 3, "Press 'h' then a direction key to harvest.");
         World.display.drawText(1, 5, "Press any key to return to game.");
     };
 

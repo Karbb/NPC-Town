@@ -36,6 +36,7 @@
 
         World.engine = new ROT.Engine(scheduler);
 
+        Notifications.clear();
         Notifications.create("Press '\\' to display game help.");
 
         World.engine.start();
