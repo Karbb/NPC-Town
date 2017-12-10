@@ -27,7 +27,6 @@
     };
 
     Item.prototype.getForeground = function () {
-        console.log(this.type.foreground);
         return this.type.foreground;
     };
 

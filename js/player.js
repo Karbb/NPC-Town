@@ -19,7 +19,7 @@
         }
 
         if (itemExisting === null) {
-            inventory.push(itemToAdd);     
+            inventory.push(itemToAdd);
         } else {
             itemExisting.modifyQuantity(itemToAdd.quantity);
         }
@@ -59,7 +59,7 @@
     };
 
     Player.prototype.move = function (dX, dY) {
-        if(this._x + dX < 0 || this._x + dX > World.map._width || this._y + dY < 0 || this._y + dY > World.map._height){
+        if (this._x + dX < 0 || this._x + dX > World.map._width || this._y + dY < 0 || this._y + dY > World.map._height) {
             return;
         }
 
@@ -89,6 +89,9 @@
             World.player.move(0, -1);
         } else if (e.keyCode === ROT.VK_DOWN) {
             World.player.move(0, 1);
+        } else if (e.keyCode === ROT.VK_H) {
+            World.player.action(World.player.harvest);
+            
         }
 
         World.render();
@@ -96,6 +99,29 @@
         window.removeEventListener("keydown", this);
         World.engine.unlock();
     };
+
+    Player.prototype.action = function (action) {
+        console.log("che direzione?");
+        window.addEventListener("keydown", function (e) {
+            if (e.keyCode === ROT.VK_LEFT) {
+                action.call(this, -1, 0);
+            } else if (e.keyCode === ROT.VK_RIGHT) {
+                action.call(this, 1, 0);
+            } else if (e.keyCode === ROT.VK_UP) {
+                action.call(this, 0, -1);
+            } else if (e.keyCode === ROT.VK_DOWN) {
+                action.call(this, 0, 1);
+            }
+        });
+
+    };
+
+    Player.prototype.harvest = function (dX, dY) {
+        console.log("yoy");
+        var nextTile = World.map.getTile(this._x + dX, this._y + dY);
+
+        console.log(nextTile);
+    }
 
     root.Player = Player;
 }(this));
