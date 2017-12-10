@@ -6,7 +6,6 @@
         this.y = y;
         this.z = z;
         this.content = [];
-        this.name = name || "null";
         this.icon = ".";
         this.walkable = false;
         this.foregroundColor = null || World.display._options.fg;
@@ -14,7 +13,7 @@
     }
 
     Tile.prototype.isWalkable = function () {
-        if (this instanceof EmptyTile && this.content.length > 0) {
+        if (this instanceof Tile.EmptyTile && this.content.length > 0) {
             return false;
         }
         return this.walkable;
@@ -64,36 +63,47 @@
         return this.backgroundColor;
     };
 
-    function WallTile(x, y, z) {
+    Tile.prototype.setForeground = function (foregroundColor) {
+        this.foregroundColor = foregroundColor;
+    };
+
+    Tile.prototype.setBackground = function (backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    };
+
+    Tile.WallTile = function(x, y, z) {
         Tile.call(this, x, y, z);
-        this.name = "Wall";
         this.icon = "#";
     };
 
-    WallTile.extend(Tile);
+    Tile.WallTile.extend(Tile);
 
-    function EmptyTile(x, y, z) {
+    Tile.EmptyTile = function(x, y, z) {
         Tile.call(this, x, y, z);
-        this.name = "Empty";
         this.icon = ".";
         this.walkable = true;
     };
 
-    EmptyTile.extend(Tile);
+    Tile.EmptyTile.extend(Tile);
 
-    function TreeTile(x, y, z) {
+    Tile.TreeTile = function(x, y, z) {
         Tile.call(this, x, y, z);
-        this.name = "Tree";
         this.icon = "O";
         this.walkable = false;
         this.foregroundColor = "#663300";
         this.backgroundColor = "#009900";
     };
 
-    TreeTile.extend(Tile);
+    Tile.TreeTile.extend(Tile);
+
+    Tile.LeafTile = function(x, y, z) {
+        Tile.call(this, x, y, z);
+        this.icon = "";
+        this.walkable = true;
+        this.backgroundColor = "#009900";
+    };
+
+    Tile.LeafTile.extend(Tile);
 
     root.Tile = Tile;
-    root.WallTile = WallTile;
-    root.EmptyTile = EmptyTile;
-    root.TreeTile = TreeTile;
 }(this));

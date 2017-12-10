@@ -50,9 +50,8 @@
                 if ((y === Math.floor(h / 2) && x !== w) || (y === Math.floor(h / 2 + 1) && x !== w) || empty) {
                     isWall = false;
                 }
-                var tile = isWall ? new WallTile(x, y, 0) : new EmptyTile(x, y, 0);
-                if(tile instanceof EmptyTile){
-                    console.log(tile);
+                var tile = isWall ? new Tile.WallTile(x, y, 0) : new Tile.EmptyTile(x, y, 0);
+                if(tile instanceof Tile.EmptyTile){
                     this.freeCells.push(tile);
                 }
                 callback(tile);
