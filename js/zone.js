@@ -13,7 +13,7 @@
     Zone.init = function (zone) {
         var options = {
             width: 50,
-            height: 25,
+            height: 30,
             fontSize: 20,
             forceSquareRatio: true,
             fontFamily: "Metrickal",
