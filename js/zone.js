@@ -12,8 +12,8 @@
 
     Zone.init = function (zone) {
         var options = {
-            width: 50,
-            height: 30,
+            width: 40,
+            height: 20,
             fontSize: 20,
             forceSquareRatio: true,
             fontFamily: "Metrickal",
@@ -25,7 +25,11 @@
             World.containerDiv.removeChild(World.containerDiv.childNodes[0]);
         }
 
-        World.contentDiv.innerText = zone.name;
+        World.asciiDiv.className += "inactive";
+        setTimeout(function () {
+            World.asciiDiv.remove();
+        }, 1000);
+
         World.containerDiv.appendChild(World.display.getContainer());
 
         World.map = {};

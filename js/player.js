@@ -131,7 +131,6 @@
     Player.prototype.harvest = function (dX, dY) {
         var toHarvestTile = World.map.getTile(World.player._x + dX, World.player._y + dY);
         if (toHarvestTile.isHarvestable()) {
-            console.log(toHarvestTile);
             if (toHarvestTile.getContent()[0]) {
                 Player.itemAcquired(toHarvestTile.getContent()[0]);
                 toHarvestTile.getContent().splice(0, 1);

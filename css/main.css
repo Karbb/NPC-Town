@@ -2,6 +2,7 @@
   font-family: Metrickal;
   src: url(Metrickal-Regular.otf);
 }
+
 body {
   font-family: Metrickal, monospace;
   font-size: 14px;
@@ -11,34 +12,63 @@ body {
   background-color: #000;
 }
 
+#wrapper {
+  display: grid;
+  grid-template-rows: 75% 25%;
+  grid-template-columns: 25% 75%;
+}
+
 .bold {
   font-weight: bold;
 }
 
-.title {
-  font-size: 18px;
+.bordered {
+  position: relative;
   text-align: center;
-  text-decoration: underline;
+  border: 1px solid rgb(255, 255, 255);
+  width: 100px;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 
-.ascii-art {
-  color: rgb(251, 255, 0);
+.animate {
+  opacity: 0%;
+  transition: opacity 1s;
+  display : none;
 }
 
 #canvas {
   text-align: center;
 }
 
-#notificationsContainer {
-  height: 300px;
+#ascii-art {
+  color: rgb(251, 255, 0);
+  opacity: 1;
+  height: 200;
 }
 
-.bordered {
-  position: relative;
-	text-align: center;
-	border: 1px solid rgb(255, 255, 255);
-	width: 100px;
-	margin-bottom: 5px;
-	padding: 5px 10px;
-	cursor: pointer;
+#ascii-art.inactive {
+  transition: opacity 1s ease-out;
+  opacity: 0;
+}
+
+#notifications {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+#content {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+#zonesContainer {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+#inventoryContainer {
+  grid-column: 2;
+  grid-row: 2;
 }

@@ -6,7 +6,7 @@
          * Rot.Display instance */
         display: null,
         /**
-         * Array field storing items
+         * Array storing item instances
          */
         inventory: null,
         /**
@@ -17,6 +17,9 @@
         * Rot.Map instance
         */
         map: null,
+        /**
+         * Player instance
+         */
         player: null,
 
         /**
@@ -25,7 +28,7 @@
         zonesDiv: document.getElementById("zones"),
         containerDiv: document.getElementById("canvas"),
         inventoryDiv: document.getElementById("inventory"),
-        contentDiv: document.getElementById("contentTitle"),
+        asciiDiv: document.getElementById("ascii-art"),
     };
 
     /**
@@ -86,7 +89,7 @@
     };
 
     /**
-     * 
+     * Listing zones buttons"
      */
     World.listZones = function () {
         for (var i in Zone) {
@@ -107,7 +110,6 @@
      * 
      */
     World.drawinventory = function () {
-        this.inventoryDiv.innerHTML = "";
         this.inventory.forEach(item => {
             let string = document.createElement('p');
             string.innerHTML = item.type.name + ": " + item.quantity;

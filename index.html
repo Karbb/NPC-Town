@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>NPC TOWN</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
-        crossorigin="anonymous">
     <link rel="stylesheet" href="./css/main.css">
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <pre id="header" class="ascii-art">
-                    
-                    
+
+    <div id="ascii-art">
+        <pre>
+                              
     &&\   &&\ &&&&&&&\   &&&&&&\        &&&&&&&&\                                   
     &&&\  && |&&  __&&\ &&  __&&\       \__&&  __|                                  
     &&&&\ && |&& |  && |&& /  \__|         && |    &&&&&&\  &&\  &&\  &&\ &&&&&&&\  
@@ -26,28 +21,22 @@
     && | \&& |&& |      \&&&&&&  |         && |   \&&&&&&  |\&&&&&\&&&&  |&& |  && |
     \__|  \__|\__|       \______/          \__|    \______/  \_____\____/ \__|  \__|
               
-                </pre>
-                <hr>
-            </div>
+        </pre>
+    </div>
+
+    <div id="wrapper">
+
+        <div id="notifications">
         </div>
-        <div class="row">
-            <div class="col" id="notifications">
-                <p class="bold title">Notifications</p>
-                <div id="notificationsContainer">
-                </div>
-                <p class="bold title">Zones</p>
-                <div >
-                    <div id="zones"></div>
-                </div>
-            </div>
-            <div class="col" id="content">
-                <p class="bold title" id="contentTitle"></p>
-                <div id="canvas" class='img-responsive'></div>
-            </div>
-            <div class="col">
-                <p class="bold  title">Inventory</p>
-                <div id="inventory"></div>
-            </div>
+
+        <div id="content">
+            <div id="canvas"></div>
+        </div>
+
+        <div id="zones">
+        </div>
+
+        <div class="inventory">
         </div>
     </div>
 

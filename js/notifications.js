@@ -4,7 +4,7 @@
 
     var Notifications = {
         MAX_NOTIFICATIONS_NUMBER: 10,
-        notificationsDiv: document.getElementById("notificationsContainer")
+        notificationsDiv: document.getElementById("notifications")
     };
 
     /**
