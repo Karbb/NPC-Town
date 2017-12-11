@@ -18,6 +18,10 @@
         return this.type.name;
     };
 
+    Item.prototype.getPluralName = function () {
+        return this.type.pluralName;
+    };
+
     Item.prototype.getQuantity = function () {
         return this.quantity;
     };
@@ -31,7 +35,8 @@
     };
 
     Item.Berry = {
-        name: "Berry",
+        name: "berry",
+        pluralName: "berries",
         description: "A berry gathered in the woods",
         icon: "*",
         foreground: "#ff0000",
@@ -39,7 +44,7 @@
     };
 
     Item.Money = {
-        name: "Money",
+        name: "money",
         description: "The ol' money",
         value: 1
     };

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col">
                 <pre id="header" class="ascii-art">
@@ -36,11 +36,13 @@
                 <div id="notificationsContainer">
                 </div>
                 <p class="bold title">Zones</p>
-                <div id="zones"></div>
+                <div >
+                    <div id="zones"></div>
+                </div>
             </div>
-            <div class="col-6" id="content">
+            <div class="col" id="content">
                 <p class="bold title" id="contentTitle"></p>
-                <div id="canvas"></div>
+                <div id="canvas" class='img-responsive'></div>
             </div>
             <div class="col">
                 <p class="bold  title">Inventory</p>

@@ -117,6 +117,7 @@
     };
 
     World.render = function () {
+        World.display.clear();
         var screenWidth = World.display._options.width;
         var screenHeight = World.display._options.height;
 

@@ -12,11 +12,11 @@
 
     Zone.init = function (zone) {
         var options = {
-            width: 21,
-            height: 13,
+            width: 50,
+            height: 30,
             fontSize: 20,
             forceSquareRatio: true,
-            fontFamily: "fixedsys",
+            fontFamily: "Metrickal",
             spacing: 1.10
         };
 
@@ -35,6 +35,10 @@
         scheduler.add(World.player, true);
 
         World.engine = new ROT.Engine(scheduler);
+
+        Notifications.clear();
+        Notifications.create("Press '\\' to display game help.");
+
         World.engine.start();
     };
 
@@ -46,7 +50,7 @@
     };
 
     Zone.Wildland.generateMap = function () {
-        World.map = new RoguelikeMap.WildlandMap(50, 30);
+        World.map = new RoguelikeMap.WildlandMap(200, 50);
 
         var digCallback = function (tile) {
             World.map.setTile(tile.getX(), tile.getY(), tile);
@@ -69,12 +73,12 @@
     };
 
     Zone.Wildland.generateStuff = function (freeCells) {
-        for (var i = 0; i < 10; i++) {
+        var generateBushes = function () {
             var index = Math.floor(ROT.RNG.getUniform() * freeCells.length);
             let randomTile = freeCells[index];
-            World.map.getTile(randomTile.getX(), randomTile.getY()).addItem(new Item("Berry", 1));
+            World.map.setTile(randomTile.getX(), randomTile.getY(), new Tile.BushTile(randomTile.getX(), randomTile.getY(), 0));
             freeCells.splice(index, 1);
-        }
+        };
 
         var generateTrees = function () {
             var index = Math.floor(ROT.RNG.getUniform() * freeCells.length);
@@ -89,8 +93,9 @@
             freeCells.splice(index, 1);
         };
 
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 50; i++) {
             generateTrees();
+            generateBushes();
         }
     };
 
