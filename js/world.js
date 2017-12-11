@@ -7,7 +7,7 @@
         display: null,
         /** 
          * Rot.Display instance */
-        displaytext: null,
+        displayHelp: null,
         /**
          * Array storing item instances
          */
@@ -39,6 +39,8 @@
      */
     World.init = function () {
         Notifications.clear();
+        World.display = Screen.gameScreenInit();
+        World.displayHelp = Screen.helpScreenInit();
         this.syncUI();
         this.gIsGameOver = false;
         this.inventory = [];
@@ -141,6 +143,30 @@
         }
         World.display.draw(World.player._x - topLeftX, World.player._y - topLeftY, "@", "#ffff00", World.map.getTile(World.player._x, World.player._y).getBackground());
     };
+
+    World.switchToHelpscreen = function () {
+        var options = {
+            width: 40,
+            height: 20,
+            fontSize: 15,
+            fontFamily: "Metrickal",
+        };
+
+        World.displaytext = new ROT.Display(options);
+        if (World.containerDiv.hasChildNodes()) {
+            World.containerDiv.removeChild(World.containerDiv.childNodes[0]);
+        }
+        World.containerDiv.appendChild(World.displaytext.getContainer());
+        World.displaytext.drawText(1, 3, "Press 'k' then a direction key to inspect tiles.");
+        World.displaytext.drawText(1, 5, "Press 'h' then a direction key to harvest.");
+        World.displaytext.drawText(1, 7, "Press any key to return to game.");
+    };
+    World.switchToScreen = function(screen){
+        if (World.containerDiv.hasChildNodes()) {
+            World.containerDiv.removeChild(World.containerDiv.childNodes[0]);
+        }
+        World.containerDiv.appendChild(World.display.getContainer());
+    }
 
     root.World = World;
 }(this));

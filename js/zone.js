@@ -11,26 +11,7 @@
     };
 
     Zone.init = function (zone) {
-        var options = {
-            width: 40,
-            height: 20,
-            fontSize: 20,
-            forceSquareRatio: true,
-            fontFamily: "Metrickal",
-            spacing: 1.10
-        };
-
-        World.display = new ROT.Display(options);
-        if (World.containerDiv.hasChildNodes()) {
-            World.containerDiv.removeChild(World.containerDiv.childNodes[0]);
-        }
-
-        World.asciiDiv.className += "inactive";
-        setTimeout(function () {
-            World.asciiDiv.remove();
-        }, 1000);
-
-        World.containerDiv.appendChild(World.display.getContainer());
+        Screen.drawScreen(World.display);
 
         World.map = {};
         zone.generateMap();

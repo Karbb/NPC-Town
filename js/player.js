@@ -26,7 +26,13 @@
             itemExisting.modifyQuantity(itemToAdd.quantity);
         }
 
-        Notifications.create("Added " + itemToAdd.getQuantity() + " " + itemToAdd.getName());
+        var message = "Added " + itemToAdd.getQuantity();
+        if (itemToAdd.getQuantity() > 1) {
+            message = message.concat(" " + itemToAdd.getPluralName());
+        } else {
+            message = message.concat(" " + itemToAdd.getName());
+        }
+        Notifications.create(message);
 
         World.drawinventory();
     };
@@ -103,7 +109,7 @@
             } else if (e.keyCode === ROT.VK_BACK_SLASH) {
 
                 World.player.state = "HELP_SCREEN";
-                World.player.drawHelpscreen();
+                Screen.drawScreen(World.displayHelp);
                 return;
             }
         } else if (World.player.state === "INTERACT") {
@@ -118,10 +124,7 @@
             }
         } else if (World.player.state === "HELP_SCREEN") {
             if (e.keyCode) {
-                if (World.containerDiv.hasChildNodes()) {
-                    World.containerDiv.removeChild(World.containerDiv.childNodes[0]);
-                }
-                World.containerDiv.appendChild(World.display.getContainer());
+                Screen.drawScreen(World.display);
                 World.player.state = "MOVE";
             }
         }
@@ -141,6 +144,8 @@
             } else {
                 Notifications.create("This " + toHarvestTile.name + " is empty.");
             }
+        } else {
+            Notifications.create("No. You can't harvest this.");
         }
         World.player.state = "MOVE";
     };
@@ -162,23 +167,7 @@
         World.player.state = "MOVE";
     };
 
-    Player.prototype.drawHelpscreen = function () {
-        var options = {
-            width: 40,
-            height: 20,
-            fontSize: 15,
-            fontFamily: "Metrickal",
-        };
 
-        World.displaytext = new ROT.Display(options);
-        if (World.containerDiv.hasChildNodes()) {
-            World.containerDiv.removeChild(World.containerDiv.childNodes[0]);
-        }
-        World.containerDiv.appendChild(World.displaytext.getContainer());
-        World.displaytext.drawText(1, 3, "Press 'k' then a direction key to inspect tiles.");
-        World.displaytext.drawText(1, 5, "Press 'h' then a direction key to harvest.");
-        World.displaytext.drawText(1, 7, "Press any key to return to game.");
-    };
 
     root.Player = Player;
 }(this));
