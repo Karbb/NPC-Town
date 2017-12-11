@@ -5,6 +5,9 @@
         /** 
          * Rot.Display instance */
         display: null,
+        /** 
+         * Rot.Display instance */
+        displaytext: null,
         /**
          * Array storing item instances
          */

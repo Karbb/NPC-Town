@@ -118,6 +118,10 @@
             }
         } else if (World.player.state === "HELP_SCREEN") {
             if (e.keyCode) {
+                if (World.containerDiv.hasChildNodes()) {
+                    World.containerDiv.removeChild(World.containerDiv.childNodes[0]);
+                }
+                World.containerDiv.appendChild(World.display.getContainer());
                 World.player.state = "MOVE";
             }
         }
@@ -159,10 +163,21 @@
     };
 
     Player.prototype.drawHelpscreen = function () {
-        World.display.clear();
-        World.display.drawText(1, 2, "Press 'k' then a direction key to inspect tiles.");
-        World.display.drawText(1, 3, "Press 'h' then a direction key to harvest.");
-        World.display.drawText(1, 5, "Press any key to return to game.");
+        var options = {
+            width: 40,
+            height: 20,
+            fontSize: 15,
+            fontFamily: "Metrickal",
+        };
+
+        World.displaytext = new ROT.Display(options);
+        if (World.containerDiv.hasChildNodes()) {
+            World.containerDiv.removeChild(World.containerDiv.childNodes[0]);
+        }
+        World.containerDiv.appendChild(World.displaytext.getContainer());
+        World.displaytext.drawText(1, 3, "Press 'k' then a direction key to inspect tiles.");
+        World.displaytext.drawText(1, 5, "Press 'h' then a direction key to harvest.");
+        World.displaytext.drawText(1, 7, "Press any key to return to game.");
     };
 
     root.Player = Player;
