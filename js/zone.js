@@ -7,6 +7,12 @@
             description: "",
             owned: true,
             price: 0,
+        },
+        Shop: {
+            name: "Shop",
+            description: "",
+            owned: true,
+            price: 0,
         }
     };
 
@@ -35,7 +41,7 @@
     };
 
     Zone.Wildland.generateMap = function () {
-        World.map = new RoguelikeMap.WildlandMap(200, 50);
+        World.map = new WildlandMap(200, 50);
 
         var digCallback = function (tile) {
             World.map.setTile(tile.getX(), tile.getY(), tile);
@@ -85,6 +91,45 @@
     };
 
     Zone.Wildland.createPlayer = function (freeCells) {
+        var index = Math.floor(ROT.RNG.getUniform() * freeCells.length);
+        let randomTile = freeCells[index];
+        World.player = new Player(randomTile.getX(), randomTile.getY());
+        freeCells.splice(index, 1);
+    };
+
+    Zone.Shop.init = function () {
+        return Zone.init(Zone.Shop);
+    };
+
+    Zone.Shop.generateMap = function () {
+        World.map = new Shop(40, 20);
+
+       
+        var digCallback = function (tile) {
+            World.map.setTile(tile.getX(), tile.getY(), tile);
+        };
+
+        World.map.create(digCallback.bind(this));
+        this.generateStuff(World.map.getFreeCells());
+        this.createPlayer(World.map.getFreeCells());
+
+        World.display.clear();
+        World.render();
+    };
+
+    Zone.Shop.drawWholeMap = function () {
+        for (var x = 0; x < 50; x++) {
+            for (var y = 0; y < 30; y++) {
+                World.display.draw(x, y, World.map.getTile(x, y).getIcon());
+            }
+        }
+    };
+
+    Zone.Shop.generateStuff = function (freeCells) {
+        
+    };
+
+    Zone.Shop.createPlayer = function (freeCells) {
         var index = Math.floor(ROT.RNG.getUniform() * freeCells.length);
         let randomTile = freeCells[index];
         World.player = new Player(randomTile.getX(), randomTile.getY());

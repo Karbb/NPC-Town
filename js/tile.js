@@ -94,6 +94,16 @@
 
     Tile.EmptyTile.extend(Tile);
 
+    Tile.HiddenTile = function (x, y, z) {
+        Tile.call(this, x, y, z);
+        this.name = "hidden";
+        this.icon = "";
+        this.walkable = false;
+        this.background = '#000000';
+    };
+
+    Tile.HiddenTile.extend(Tile);
+
     Tile.TreeTile = function (x, y, z) {
         Tile.call(this, x, y, z);
         this.icon = "O";
@@ -128,5 +138,28 @@
 
     Tile.BushTile.extend(Tile);
 
-    root.Tile = Tile;
+    Tile.ShopTile = function (x, y, z) {
+        Tile.call(this, x, y, z);
+        this.name = "nothing";
+        this.icon = "";
+        this.walkable = true;
+
+        if (x + z % 2 === 0) {
+            this.background = "#663300";
+        } else {
+            this.background = "#b35900";
+        }
+};
+
+Tile.ShopTile.extend(Tile);
+
+Tile.ShopWallTile = function (x, y, z) {
+    Tile.call(this, x, y, z);
+    this.icon = "#";
+    this.background = "#331a00";
+};
+
+Tile.ShopWallTile.extend(Tile);
+
+root.Tile = Tile;
 }(this));

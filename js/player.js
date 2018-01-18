@@ -76,6 +76,9 @@
 
         var nextTile = World.map.getTile(this._x + dX, this._y + dY);
 
+        if(nextTile === "undefined"){
+            return;
+        }
         if (!(nextTile.isWalkable())) {
             return;
         }
