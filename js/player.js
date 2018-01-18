@@ -12,8 +12,11 @@
         var itemExisting = null;
         var inventory = World.inventory;
 
+        
         for (var i = 0; i < inventory.length; i++) {
             var item = inventory[i];
+            console.log(itemToAdd);
+            console.log(item);
             if (item.type === itemToAdd.type) {
                 itemExisting = item;
                 break;
@@ -45,10 +48,10 @@
             if (item.type === itemToUse.type) {
                 if (item.quantity > itemToUse.quantity) {
                     item.modifyQuantity(-itemToUse.quantity);
-                    Notifications.create("Used" + itemToAdd.getQuantity() + " " + itemToAdd.getName());
+                    Notifications.create("Used" + itemToUse.getQuantity() + " " + itemToUse.getName());
                 } else if (item.quantity === itemToUse.quantity) {
                     inventory.splice(i, 1);
-                    Notifications.create("Used" + itemToAdd.getQuantity() + " " + itemToAdd.getName());
+                    Notifications.create("Used" + itemToUse.getQuantity() + " " + itemToUse.getName());
                 } else {
                     Notifications.create("Can't use!");
                 }
@@ -139,6 +142,7 @@
         var toHarvestTile = World.map.getTile(World.player._x + dX, World.player._y + dY);
         if (toHarvestTile.isHarvestable()) {
             if (toHarvestTile.getContent()[0]) {
+                
                 Player.itemAcquired(toHarvestTile.getContent()[0]);
                 toHarvestTile.getContent().splice(0, 1);
             } else {

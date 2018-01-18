@@ -115,6 +115,7 @@
      * 
      */
     World.drawinventory = function () {
+        this.inventoryDiv.innerHTML = "";
         this.inventory.forEach(item => {
             let string = document.createElement('p');
             string.innerHTML = item.type.name + ": " + item.quantity;
